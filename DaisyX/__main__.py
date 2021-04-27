@@ -62,12 +62,15 @@ from DaisyX.modules.helper_funcs.chat_status import is_user_admin
 from DaisyX.modules.helper_funcs.misc import paginate_modules
 from DaisyX.modules.helper_funcs.readable_time import get_readable_time
 
+
+DLPH_IMG = "https://images2.alphacoders.com/917/917787.png"
+
 PM_START_TEXT = """
-Baka!? Why are you reading me? Oi, this is too early for you.... Oh wait, this is start. 
+◤ Baka!? Why are you reading me? Oi, this is too early for you.... Oh wait, this is start. ◥
 
 Anyways, I am another bot made by @ArenaComs for dunno what reason but I am here to help you out.
 
-Make sure you read *INFO* Section Below 
+◣ Make sure you read *INFO* Section Below ◢
 """
 
 buttons = [
@@ -99,9 +102,7 @@ HELP_STRINGS = f"""
 )
 
 
-DONATE_STRING = """Heya, glad to hear you want to donate!
-You can donate to the original writer's of the Base code,
-Support them  [Inuka](t.me/InukaASiTH),[Jason](t.me/imjanindu),"""
+DONATE_STRING = """We are good. Have your money with yourself and help the needy ones."""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -212,7 +213,16 @@ def start(update: Update, context: CallbackContext):
 
             elif args[0][1:].isdigit() and "rules" in IMPORTED:
                 IMPORTED["rules"].send_rules(update, args[0], from_pm=True)
-
+         else:
+                update.effective_message.reply_photo(
+                    DLPH_IMG,
+                    PM_START_TEXT,
+                    parse_mode=ParseMode.MARKDOWN,
+                    disable_web_page_preview=True,
+                    reply_markup=InlineKeyboardMarkup(buttons),
+                    parse_mode=ParseMode.MARKDOWN,
+                    timeout=60,
+             )
         else:
             update.effective_message.reply_text(
                 PM_START_TEXT,
