@@ -213,15 +213,15 @@ def start(update: Update, context: CallbackContext):
 
             elif args[0][1:].isdigit() and "rules" in IMPORTED:
                 IMPORTED["rules"].send_rules(update, args[0], from_pm=True)
-         else:
-                update.effective_message.reply_photo(
-                    DLPH_IMG,
-                    PM_START_TEXT,
-                    parse_mode=ParseMode.MARKDOWN,
-                    disable_web_page_preview=True,
-                    reply_markup=InlineKeyboardMarkup(buttons),
-                    parse_mode=ParseMode.MARKDOWN,
-                    timeout=60,
+        else:
+             update.effective_message.reply_photo(
+                 DLPH_IMG,
+                 PM_START_TEXT,
+                 parse_mode=ParseMode.MARKDOWN,
+                 disable_web_page_preview=True,
+                 reply_markup=InlineKeyboardMarkup(buttons),
+                 parse_mode=ParseMode.MARKDOWN,
+                 timeout=60,
              )
         else:
             update.effective_message.reply_text(
