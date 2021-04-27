@@ -220,7 +220,6 @@ def start(update: Update, context: CallbackContext):
                  parse_mode=ParseMode.MARKDOWN,
                  disable_web_page_preview=True,
                  reply_markup=InlineKeyboardMarkup(buttons),
-                 parse_mode=ParseMode.MARKDOWN,
                  timeout=60,
              )
     else:
