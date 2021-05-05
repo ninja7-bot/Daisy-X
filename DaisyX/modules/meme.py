@@ -494,7 +494,7 @@ TNG = "https://telegra.ph/file/2632bf79c7a184cac562c.png"
 @run_async
 def tng(update, context):
     number = random.choice(range(1, 147))
-    message.reply_photo(reply, TNG, caption=number,
+    update.effective_message.reply_photo(reply, TNG, caption=number,
                         parse_mode=ParseMode.MARKDOWN)
     
 __help__ = """
