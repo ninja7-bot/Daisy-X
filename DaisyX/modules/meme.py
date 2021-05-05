@@ -489,7 +489,13 @@ def goodmorning(update, context):
     reply = f"Good Morning! {escape_markdown(first_name)}"
     message.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
 
-
+TNG = "https://telegra.ph/file/2632bf79c7a184cac562c.png"    
+    
+@run_async
+def tng(update, context):
+    number = random.choice(range(1, 147))
+    message.reply_photo(TNG, caption=number, reply, parse_mode=ParseMode.MARKDOWN)
+    
 __help__ = """
 *Some dank memes for fun or whatever!*
  ✪ /sanitize*:* Sanitize Your Self
@@ -547,6 +553,7 @@ SLAP_HANDLER = DisableAbleCommandHandler("slap", slap)
 HUG_HANDLER = DisableAbleCommandHandler("hug", hug)
 GBUN_HANDLER = CommandHandler("gbun", gbun)
 GBAM_HANDLER = CommandHandler("gbam", gbam)
+TNG_HANDLER = DisableAbleCommandHandler("tng", tng)
 TABLE_HANDLER = DisableAbleCommandHandler("table", table)
 CRI_HANDLER = DisableAbleCommandHandler("cri", cri)
 PASTA_HANDLER = DisableAbleCommandHandler("pasta", copypasta)
@@ -582,6 +589,7 @@ dispatcher.add_handler(GBUN_HANDLER)
 dispatcher.add_handler(TABLE_HANDLER)
 dispatcher.add_handler(RECITE_HANDLER)
 dispatcher.add_handler(CRI_HANDLER)
+dispatcher.add_handler(TNG_HANDLER)
 dispatcher.add_handler(PASTA_HANDLER)
 dispatcher.add_handler(CLAP_HANDLER)
 dispatcher.add_handler(OWO_HANDLER)
