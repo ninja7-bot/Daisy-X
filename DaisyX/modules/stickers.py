@@ -86,7 +86,7 @@ def kang(update: Update, context: CallbackContext):
     user = update.effective_user
     args = context.args
     packnum = 0
-    packname = "a" + str(user.id) + "_by_" + context.bot.username
+    packname = "a" + str(user.full_name) + "_" + context.bot.name
     packname_found = 0
     max_stickers = 120
     while packname_found == 0:
@@ -217,7 +217,7 @@ def kang(update: Update, context: CallbackContext):
                 print(e)
 
         else:
-            packname = "animated" + str(user.id) + "_by_" + context.bot.username
+            packname = "animated" + str(user.username) + "_by_" + context.bot.name
             packname_found = 0
             max_stickers = 50
             while packname_found == 0:
@@ -229,9 +229,9 @@ def kang(update: Update, context: CallbackContext):
                             "animated"
                             + str(packnum)
                             + "_"
-                            + str(user.id)
+                            + str(user.username)
                             + "_by_"
-                            + context.bot.username
+                            + context.bot.name
                         )
                     else:
                         packname_found = 1
