@@ -238,59 +238,32 @@ def info(update: Update, context: CallbackContext):
     else:
         return
 
-    rep = message.reply_text("<code>Appraising...</code>", parse_mode=ParseMode.HTML)
+    rep = message.reply_text("<code>Extracting...</code>", parse_mode=ParseMode.HTML)
 
     text = (
-        f"╒═══「<b> Appraisal results:</b> 」\n"
-        f"ID: <code>{user.id}</code>\n"
-        f"First Name: {html.escape(user.first_name)}"
+        f"╒═══「<b> Status:</b> 」\n"
+        f"{mention_html(user.id, user.first_name)} | <code>{user.id}</code>\n"
     )
-
-    if user.last_name:
-        text += f"\nLast Name: {html.escape(user.last_name)}"
 
     if user.username:
         text += f"\nUsername: @{html.escape(user.username)}"
-
-    text += f"\nPermalink: {mention_html(user.id, 'link')}"
-
-    if chat.type != "private" and user_id != bot.id:
-        _stext = "\nPresence: <code>{}</code>"
-
-        afk_st = is_afk(user.id)
-        if afk_st:
-            text += _stext.format("AFK")
-        else:
-            status = status = bot.get_chat_member(chat.id, user.id).status
-            if status:
-                if status in {"left", "kicked"}:
-                    text += _stext.format("Not here")
-                elif status == "member":
-                    text += _stext.format("Detected")
-                elif status in {"administrator", "creator"}:
-                    text += _stext.format("Admin")
+        
     if user_id not in [bot.id, 777000, 1087968824]:
         userhp = hpmanager(user)
-        text += f"\n\n<b>Health:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']}</code>\n[<i>{make_bar(int(userhp['percentage']))} </i>{userhp['percentage']}%]"
-
-    try:
-        spamwtc = sw.get_ban(int(user.id))
-        if spamwtc:
-            text += "\n\n<b>This person is Spamwatched!</b>"
-            text += f"\nReason: <pre>{spamwtc.reason}</pre>"
-            text += "\nAppeal at @SpamWatchSupport"
-        else:
+        text += f"\n\n<b>Health:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']}</code>\n[<i>{make_bar(int(userhp['percentage']))} </i> | <code>{userhp['percentage']}% </code>]"
+    
+    if user.bio:
+        text += f"\n<b>Bio:</b> <i>{html.escape(user.bio)}</i>"
+        
+        except:
             pass
-    except:
-        pass  # don't crash if api is down somehow...
-
+        
     disaster_level_present = False
-
+    
     if user.id == OWNER_ID:
         text += "\n\nThe Disaster level of this person is 'God'."
         disaster_level_present = True
     elif user.id in DEV_USERS:
-
         text += "\n\nThis user is member of 'Anteiku Union'."
         disaster_level_present = True
     elif user.id in DRAGONS:
@@ -342,8 +315,6 @@ def info(update: Update, context: CallbackContext):
                 disable_web_page_preview=True,
             )
 
-            os.remove(f"{user.id}.png")
-        # Incase user don't have profile pic, send normal text
         except IndexError:
             message.reply_text(
                 text, parse_mode=ParseMode.HTML, disable_web_page_preview=True
