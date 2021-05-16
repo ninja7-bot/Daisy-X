@@ -251,12 +251,6 @@ def info(update: Update, context: CallbackContext):
     if user_id not in [bot.id, 777000, 1087968824]:
         userhp = hpmanager(user)
         text += f"\n\n<b>Health:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']}</code>\n[<i>{make_bar(int(userhp['percentage']))} </i> | <code>{userhp['percentage']}% </code>]"
-    
-    try:
-    if user.bio:
-        text += f"\n<b>Bio:</b> <i>{html.escape(bot.get_user_bio(user.id))}</i>"
-    except:
-        pass
            
     disaster_level_present = False
     
