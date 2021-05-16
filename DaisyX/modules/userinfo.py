@@ -254,9 +254,6 @@ def info(update: Update, context: CallbackContext):
     
     if user.bio:
         text += f"\n<b>Bio:</b> <i>{html.escape(user.bio)}</i>"
-        
-    except:
-        pass
            
     disaster_level_present = False
     
