@@ -488,7 +488,7 @@ def reply_filter(update, context):
                 else:
                     # LEGACY - all new filters will have has_markdown set to True.
                     try:
-                        send_message(update.effective_message, filt.reply)
+                        send_message(update.effective_message)
                     except BadRequest as excp:
                         LOGGER.exception("Error in filters: " + excp.message)
                 break
