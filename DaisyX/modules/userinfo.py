@@ -252,8 +252,11 @@ def info(update: Update, context: CallbackContext):
         userhp = hpmanager(user)
         text += f"\n\n<b>Health:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']}</code>\n[<i>{make_bar(int(userhp['percentage']))} </i> | <code>{userhp['percentage']}% </code>]"
     
+    try:
     if user.bio:
-        text += f"\n<b>Bio:</b> <i>{html.escape(user.bio)}</i>"
+        text += f"\n<b>Bio:</b> <i>{html.escape(bot.get_user_bio(user.id))}</i>"
+    except:
+        pass
            
     disaster_level_present = False
     
@@ -323,11 +326,6 @@ def info(update: Update, context: CallbackContext):
         )
 
     rep.delete()
-"""
-            _file = bot.get_file(profile["file_id"])
-            _file.download(f"profile.png")
-            pfp = f"profile.png"
-"""
 
 @run_async
 def about_me(update: Update, context: CallbackContext):
