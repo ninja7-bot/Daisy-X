@@ -544,7 +544,7 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
     elif site == "fox":
-        search_url = f"fanfox.net/search?title={search_query}"
+        search_url = f"https://www.fanfox.net/search?title={search_query}"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
         search_result = soup.find_all("h2", {"class": "manga-list-4-item-tip"})
