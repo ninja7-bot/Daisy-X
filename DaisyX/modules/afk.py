@@ -41,6 +41,8 @@ def afk(update: Update, context: CallbackContext):
                     sticker_id,
                     reply_to_message_id=message.message_id,
                 )
+        else:
+            reason = ""
     sql.set_afk(update.effective_user.id, reason)
     fname = update.effective_user.first_name
     try:
