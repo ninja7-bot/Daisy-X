@@ -33,7 +33,14 @@ def afk(update: Update, context: CallbackContext):
             notice = "\nYour afk reason was shortened to 100 characters."
     else:
         reason = ""
-
+        if reason.startswith("|") and reason.endswith("|"):
+            sticker_id = reason.replace("|", "").replace("|", "")
+            try:
+                context.bot.send_sticker(
+                    chat.id,
+                    sticker_id,
+                    reply_to_message_id=message.message_id,
+                )
     sql.set_afk(update.effective_user.id, reason)
     fname = update.effective_user.first_name
     try:
