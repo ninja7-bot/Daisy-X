@@ -543,6 +543,21 @@ def site_search(update: Update, context: CallbackContext, site: str):
             post_link = entry.a["href"]
             post_name = html.escape(entry.text.strip())
             result += f"• <a href='{post_link}'>{post_name}</a>\n"
+    elif site == "fox":
+        search_url = f"fanfox.net/search?title={search_query}"
+        html_text = requests.get(search_url).text
+        soup = bs4.BeautifulSoup(html_text, "html.parser")
+        search_result = soup.find_all("h2", {"class": "manga-list-4-item-tip"})
+
+        if search_result:
+            result = f"<b>Search results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>Manga Fox</code>: \n"
+            for entry in search_result:
+                post_link = "https://fanfox.net/manga/" + entry.a["href"]
+                post_name = html.escape(entry.text)
+                result += f"• <a href='{post_link}'>{post_name}</a>\n"
+        else:
+            more_results = False
+            result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKaizoku</code>"
 
     buttons = [[InlineKeyboardButton("See all results", url=search_url)]]
 
@@ -568,7 +583,11 @@ def kaizoku(update: Update, context: CallbackContext):
 def kayo(update: Update, context: CallbackContext):
     site_search(update, context, "kayo")
 
-
+@run_async
+def fox(update: Update, context: CallbackContext):
+    site_search(update, context, "fox")
+    
+    
 __help__ = """
 Get information about anime, manga or characters from [AniList](anilist.co).
 *Available commands:*
@@ -591,6 +610,7 @@ USER_HANDLER = DisableAbleCommandHandler("user", user)
 UPCOMING_HANDLER = DisableAbleCommandHandler("upcoming", upcoming)
 KAIZOKU_SEARCH_HANDLER = DisableAbleCommandHandler("kaizoku", kaizoku)
 KAYO_SEARCH_HANDLER = DisableAbleCommandHandler("kayo", kayo)
+FOX_SEARCH_HANDLER = DisableAbleCommandHandler("fox", fox)
 BUTTON_HANDLER = CallbackQueryHandler(button, pattern="anime_.*")
 
 dispatcher.add_handler(BUTTON_HANDLER)
@@ -602,7 +622,7 @@ dispatcher.add_handler(USER_HANDLER)
 dispatcher.add_handler(KAIZOKU_SEARCH_HANDLER)
 dispatcher.add_handler(KAYO_SEARCH_HANDLER)
 dispatcher.add_handler(UPCOMING_HANDLER)
-
+dispatcher.add_handler(FOX_SEARCH_HANDLER)
 
 __command_list__ = [
     "anime",
@@ -613,6 +633,7 @@ __command_list__ = [
     "kaizoku",
     "airing",
     "kayo",
+    "fox",
 ]
 __handlers__ = [
     ANIME_HANDLER,
@@ -624,5 +645,6 @@ __handlers__ = [
     KAYO_SEARCH_HANDLER,
     BUTTON_HANDLER,
     AIRING_HANDLER,
+    FOX_SEARCH_HANDLER,
 ]
-__mod_name__ = "Anime 👸"
+__mod_name__ = "Anime"
